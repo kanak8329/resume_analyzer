@@ -104,13 +104,13 @@ if st.button("Analyze Resume"):
         # Display results in a visually appealing way
         st.markdown("<div class='result'>", unsafe_allow_html=True)
         st.markdown("### Analysis Results")
-        st.markdown(f"ATS Score: {response['ats_score']}%")
-        st.markdown("---")
-        st.markdown("Missing Keywords:")
-        st.write(", ".join(response["missing_keywords"]))
-        st.markdown("---")
-        st.markdown("Suggestions:")
-        st.write(response["suggestions"])
+        st.markdown(f"<p>ATS Score: <strong>{response['ats_score']}%</strong></p>", unsafe_allow_html=True)
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("<h4>Missing Keywords:</h4>", unsafe_allow_html=True)
+        st.markdown("<ul>" + "".join([f"<li>{keyword}</li>" for keyword in response["missing_keywords"]]) + "</ul>", unsafe_allow_html=True)
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("<h4>Suggestions:</h4>", unsafe_allow_html=True)
+        st.markdown("<ul>" + "".join([f"<li>{suggestion}</li>" for suggestion in response["suggestions"]]) + "</ul>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
     else:
         st.error("Please upload a resume and paste the job description.")
@@ -124,3 +124,17 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+# Smooth scroll functionality
+import streamlit.components.v1 as components
+
+smooth_scroll_script = """
+<script>
+function smoothScroll() {
+    document.querySelectorAll('.stButton button')[0].scrollIntoView({ behavior: 'smooth' });
+}
+smoothScroll();
+</script>
+"""
+
+components.html(smooth_scroll_script)
